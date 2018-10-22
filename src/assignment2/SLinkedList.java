@@ -1,4 +1,4 @@
-package compa2;
+package assignment2;
 import java.lang.Iterable;
 import java.util.Iterator;
 

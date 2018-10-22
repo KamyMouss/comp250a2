@@ -1,4 +1,4 @@
-package compa2;
+package assignment2;
 import java.math.BigInteger;
 
 /* 

@@ -1,4 +1,4 @@
-package compa2;
+package assignment2;
 
 public interface DeepClone<T> {
 	// Classes implementing this interface must implement deepClone() method.
