@@ -9,8 +9,8 @@ public class PolynomialTester {
 		testClone();
 		testAddTerm_1();
 		testAddTerm_2();
-		// testAdd_1();
-		// testAdd_2();
+		testAdd_1();
+		testAdd_2();
 		// testEval_1();
 		// testEval_2();
 		// testMultiplyTerm();

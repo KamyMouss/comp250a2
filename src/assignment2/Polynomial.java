@@ -27,13 +27,12 @@ public class Polynomial
 		return new Polynomial(polynomial.deepClone());
 	}
 	
-	/* 
-	 * TODO: Add new term to the polynomial. Also ensure the polynomial is
-	 * in decreasing order of exponent.
-	 */
+	/* TODO: Test these cases
+	* 	-> If coefficients are the same
+	* 	-> If coefficients add to zero
+	*/ 
 	public void addTerm(Term t)
 	{	
-		/**** ADD CODE HERE ****/
 		
 		int size = polynomial.size();
 
@@ -68,16 +67,11 @@ public class Polynomial
 			}
 			// The term is added before the current one
 			else if (currentExponent < termExponent) {
-				polynomial.add(i-1,t);
+				polynomial.add(i,t);
 				return;
 			}
 			i++;
 		}
-
-		/* TODO: Test these cases
-		* 	-> If coefficients are the same
-		* 	-> If coefficients add to zero
-		*/ 
 	}
 	
 	public Term getTerm(int index)
@@ -89,8 +83,11 @@ public class Polynomial
 	public static Polynomial add(Polynomial p1, Polynomial p2)
 	{
 		/**** ADD CODE HERE ****/
+		for (int i = 0; i < p2.size(); i++) {
+			p1.addTerm(p2.getTerm(i));
+		}
 		
-		return null;
+		return p1;
 	}
 	
 	//TODO: multiply this polynomial by a given term.
