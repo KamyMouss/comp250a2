@@ -92,6 +92,8 @@ public class Polynomial
 	public static Polynomial add(Polynomial p1, Polynomial p2)
 	{
 		Polynomial sum = p1.deepClone();
+		Term term = p2.getTerm(0);
+		
 		for (int i = 0; i < p2.size(); i++) {
 			sum.addTerm(p2.getTerm(i));
 		}
@@ -142,7 +144,6 @@ public class Polynomial
 
 	public BigInteger eval(BigInteger x)
 	{
-		/**** ADD CODE HERE ****/
 		BigInteger result = polynomial.get(0).getCoefficient().multiply(x);
 		int highestDeg = polynomial.get(0).getExponent();
 		int degCount =0;
@@ -151,21 +152,28 @@ public class Polynomial
 		
 		for(Term current: polynomial){
 			degCount = tempPrevious.getExponent();
-
+			
 			//skip the first term 0
-			if(current.getExponent() == highestDeg){
+			if(current.getExponent() == highestDeg)
+			{
 				tempPrevious = current.deepClone();
 				continue;
-			}//if consecutive degree, add coefficient of next term and multiply by x;
-			if(current.getExponent() == tempPrevious.getExponent()-1){
+			}
+			//if consecutive degree, add coefficient of next term and multiply by x;
+			if(current.getExponent() == tempPrevious.getExponent()-1)
+			{
 				result = (result.add(current.getCoefficient())).multiply(x);
 				tempPrevious = current.deepClone();
 				continue;
 				//add 0 and multiply by x while the coefficients are 0 for the degrees
-			}else while(current.getExponent() < degCount-1) {
+			}
+			else while(current.getExponent() < degCount-1) 
+			{
 				result = result.multiply(x);
 				degCount--;
-			}result = (result.add(current.getCoefficient()));
+			}
+			
+			result = (result.add(current.getCoefficient()));
 			tempPrevious = current.deepClone();
 
 		}
@@ -221,5 +229,9 @@ public class Polynomial
 	{	
 		if (polynomial.size() == 0) return "0";
 		return polynomial.toString();
+	}
+
+	public SLinkedList<Term> getLinkedList(){
+		return polynomial;
 	}
 }
