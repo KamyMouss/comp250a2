@@ -3,6 +3,8 @@ import java.lang.Iterable;
 import java.util.Iterator;
 
 /**
+ * @author Kamy moussavi
+ * @id 260807441
  * A basic implementation of some methods in a singly linked list class.
  * @author Michael Langer 
  * @modified by Sayantan Datta

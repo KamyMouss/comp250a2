@@ -31,11 +31,7 @@ public class Polynomial
 	{	
 		return new Polynomial(polynomial.deepClone());
 	}
-	
-	/* TODO: Test these cases
-	* 	-> If coefficients are the same
-	* 	-> If coefficients add to zero
-	*/ 
+
 	public void addTerm(Term t)
 	{	
 		
@@ -93,10 +89,6 @@ public class Polynomial
 		return polynomial.get(index);
 	}
 	
-	/* TODO: Test these cases
-	* 	-> If coefficients are the same
-	* 	-> If coefficients add to zero
-	*/ 
 	public static Polynomial add(Polynomial p1, Polynomial p2)
 	{
 		Polynomial sum = p1.deepClone();
@@ -106,11 +98,7 @@ public class Polynomial
 	
 		return sum;
 	}
-	
-	/* TODO: Test these cases
-	* 	-> If coefficients are the same
-	* 	-> If coefficients add to zero
-	*/ 
+
 	private void multiplyTerm(Term t)
 	{	
 		int termExponent = t.getExponent();
@@ -123,10 +111,6 @@ public class Polynomial
 		}
 	}
 
-	/* TODO: Test these cases
-	* 	-> If coefficients are the same
-	* 	-> If coefficients add to zero
-	*/ 
 	public static Polynomial multiply(Polynomial p1, Polynomial p2)
 	{
 		Polynomial temp = new Polynomial();
