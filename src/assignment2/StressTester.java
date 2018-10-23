@@ -7,6 +7,15 @@ import java.math.BigInteger;
 // All tests should terminate in less than 30 seconds on a 10 year old or newer computer.
 public class StressTester {
 	
+	public static void main(String[] args) 
+	{
+		testClone();
+		testAddTerm();
+//		testAdd();
+		testMultiplyTerm();
+		testMultiply();
+		testEval();
+	}
 	// Creates a long polynomial and clones it.
 	public static void testClone()
 	{
@@ -120,14 +129,5 @@ public class StressTester {
 	
 		System.out.println("Passed");
 	}
-	
-	public static void main(String[] args) 
-	{
-		testClone();
-		testAddTerm();
-//		testAdd();
-//		testMultiplyTerm();
-//		testMultiply();
-//		testEval();
-	}
+
 }

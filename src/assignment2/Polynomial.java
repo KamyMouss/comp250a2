@@ -2,6 +2,11 @@ package assignment2;
 
 import java.math.BigInteger;
 
+/**
+ * @author Kamy moussavi
+ * @id 260807441
+ */
+
 public class Polynomial 
 {
 	private SLinkedList<Term> polynomial;
@@ -45,6 +50,7 @@ public class Polynomial
 		int i = 0;
 		int termExponent = t.getExponent();
 		int currentExponent;
+		BigInteger coeffSum;
 
 		for (Term currentTerm: polynomial)
 		{	
@@ -57,7 +63,15 @@ public class Polynomial
 			}
 			// The current term has same exponent -> add coefficients
 			else if (currentExponent == termExponent) {
-				currentTerm.setCoefficient(currentTerm.getCoefficient().add(t.getCoefficient()));
+				coeffSum = currentTerm.getCoefficient().add(t.getCoefficient());
+				
+				// If coefficients add to 0 -> delete term
+				if (coeffSum.intValue() == 0) {
+					polynomial.remove(i);
+					return;
+				}
+
+				currentTerm.setCoefficient(coeffSum);
 				return;
 			} 
 			// The term's exponent is smallest in list
@@ -79,30 +93,58 @@ public class Polynomial
 		return polynomial.get(index);
 	}
 	
-	//TODO: Add two polynomial without modifying either
+	/* TODO: Test these cases
+	* 	-> If coefficients are the same
+	* 	-> If coefficients add to zero
+	*/ 
 	public static Polynomial add(Polynomial p1, Polynomial p2)
 	{
-		/**** ADD CODE HERE ****/
+		Polynomial sum = p1.deepClone();
 		for (int i = 0; i < p2.size(); i++) {
-			p1.addTerm(p2.getTerm(i));
+			sum.addTerm(p2.getTerm(i));
 		}
-		
-		return p1;
+	
+		return sum;
 	}
 	
-	//TODO: multiply this polynomial by a given term.
+	/* TODO: Test these cases
+	* 	-> If coefficients are the same
+	* 	-> If coefficients add to zero
+	*/ 
 	private void multiplyTerm(Term t)
 	{	
-		/**** ADD CODE HERE ****/
-		
+		int termExponent = t.getExponent();
+		BigInteger termCoefficient = t.getCoefficient();
+
+		for (Term currentTerm: polynomial)
+		{	
+			currentTerm.setCoefficient(currentTerm.getCoefficient().multiply(termCoefficient));
+			currentTerm.setExponent(currentTerm.getExponent() + termExponent);
+		}
 	}
-	
-	//TODO: multiply two polynomials
+
+	/* TODO: Test these cases
+	* 	-> If coefficients are the same
+	* 	-> If coefficients add to zero
+	*/ 
 	public static Polynomial multiply(Polynomial p1, Polynomial p2)
 	{
-		/**** ADD CODE HERE ****/
+		Polynomial temp = new Polynomial();
+		Polynomial sum = new Polynomial();
 		
-		return null;
+		for (int i = 0; i < p2.size(); i++) {
+			// get a copy of p1
+			temp = p1.deepClone();
+			
+			// multiply it by the current p2 term
+			temp.multiplyTerm(p2.getTerm(i));
+
+			// add it to the sum
+			sum = Polynomial.add(sum,temp);
+		}
+
+
+		return sum;
 	}
 	
 	//TODO: evaluate this polynomial.
@@ -117,7 +159,35 @@ public class Polynomial
 	public BigInteger eval(BigInteger x)
 	{
 		/**** ADD CODE HERE ****/
-		return new BigInteger("0");
+		BigInteger result = polynomial.get(0).getCoefficient().multiply(x);
+		int highestDeg = polynomial.get(0).getExponent();
+		int degCount =0;
+
+		Term tempPrevious = polynomial.get(0);
+		
+		for(Term current: polynomial){
+			degCount = tempPrevious.getExponent();
+
+			//skip the first term 0
+			if(current.getExponent() == highestDeg){
+				tempPrevious = current.deepClone();
+				continue;
+			}//if consecutive degree, add coefficient of next term and multiply by x;
+			if(current.getExponent() == tempPrevious.getExponent()-1){
+				result = (result.add(current.getCoefficient())).multiply(x);
+				tempPrevious = current.deepClone();
+				continue;
+				//add 0 and multiply by x while the coefficients are 0 for the degrees
+			}else while(current.getExponent() < degCount-1) {
+				result = result.multiply(x);
+				degCount--;
+			}result = (result.add(current.getCoefficient()));
+			tempPrevious = current.deepClone();
+
+		}
+
+		String resultString = result.toString();
+		return new BigInteger(resultString);
 	}
 	
 	// Checks if this polynomial is same as the polynomial in the argument.

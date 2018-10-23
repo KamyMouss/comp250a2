@@ -6,6 +6,28 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - SampleGrader",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "assignment2.SampleGrader",
+            "args": "",
+            "projectName": "compa2"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - StressTester",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "assignment2.StressTester",
+            "args": "",
+            "projectName": "compa2"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - PolynomialTester",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -14,45 +36,6 @@
             "mainClass": "assignment2.PolynomialTester",
             "args": "",
             "projectName": "compa2"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "",
-            "args": ""
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-PolynomialTester<compa2>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "compa2.PolynomialTester",
-            "args": "",
-            "projectName": "compa2"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-StressTester<compa2>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "compa2.StressTester",
-            "args": "",
-            "projectName": "compa2"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Attach)",
-            "request": "attach",
-            "hostName": "localhost",
-            "port": "<debug port of remote debuggee>"
         }
     ]
 }

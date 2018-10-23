@@ -11,10 +11,10 @@ public class PolynomialTester {
 		testAddTerm_2();
 		testAdd_1();
 		testAdd_2();
-		// testEval_1();
-		// testEval_2();
-		// testMultiplyTerm();
-		// testMultiply();
+		testEval_1();
+		testEval_2();
+		testMultiplyTerm();
+		testMultiply();
 	}
 	private static void testClone()
 	{	
