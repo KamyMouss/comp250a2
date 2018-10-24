@@ -4,7 +4,23 @@ package assignment2;
 import java.math.BigInteger;
 
 public class PolynomialTester {
-	
+	public static void main(String[] args) 
+	{
+		testClone();
+		testClone_2(); 
+		testAddTerm_1();
+		testAddTerm_2();
+		testAddTerm_3(); 
+		testAddTerm_4(); 
+		testAdd_1();
+		testAdd_2();
+		testEval_1();
+		testEval_2();
+		testEval_3();
+		testMultiplyTerm_1();
+		testMultiplyTerm_2(); 
+		testMultiply();
+	}
 	/*
 	 * Test whethere you clone method works efficiently
 	 */
@@ -479,21 +495,4 @@ public class PolynomialTester {
 
 	}
 	
-	public static void main(String[] args) 
-	{
-		testClone();
-		testClone_2(); 
-		testAddTerm_1();
-		testAddTerm_2();
-		testAddTerm_3(); 
-		testAddTerm_4(); 
-		testAdd_1();
-		testAdd_2();
-		testEval_1();
-		testEval_2();
-		testEval_3();
-		testMultiplyTerm_1();
-		testMultiplyTerm_2(); 
-		testMultiply();
-	}
 }

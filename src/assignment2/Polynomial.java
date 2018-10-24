@@ -1,10 +1,12 @@
 package assignment2;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 /**
  * @author Kamy moussavi
  * @id 260807441
+ * TODO make sure all methods can accept empty polynomials
  */
 
 public class Polynomial 
@@ -91,20 +93,58 @@ public class Polynomial
 	
 	public static Polynomial add(Polynomial p1, Polynomial p2)
 	{
-		Polynomial sum = p1.deepClone();
-		Term term = p2.getTerm(0);
+		// // Empty polynomial safety check
+		// Polynomial sum = new Polynomial();
 		
-		for (int i = 0; i < p2.size(); i++) {
-			sum.addTerm(p2.getTerm(i));
+		// if (p1.size() == 0 && p2.size() == 0){
+		// 	return sum;
+		// } else if (p1.size() == 0) {
+		// 	return p2.deepClone();
+		// } else if (p2.size() == 0){
+		// 	return p1.deepClone();
+		// }
+	
+		// Iterator<Term> p1Iter = p1.getLinkedList().iterator();
+		// Iterator<Term> p2Iter = p2.getLinkedList().iterator();
+		
+		// Term p1Term = p1.getTerm(0);
+		// Term p2Term = p2.getTerm(0);
+
+		// while (p1Iter.hasNext() || p2Iter.hasNext()) {
+		// 	// if same exponent, add them
+		// 	// if one of them larger, add first check next
+		// 	if((p1Iter.hasNext() && p2Iter.hasNext()) && (p1Term.getExponent() == p2Term.getExponent())){
+		// 		sum.addTermLast(new Term(p1Term.getExponent(), p1Term.getCoefficient().add(p2Term.getCoefficient())));
+		// 		p1Term = p1Iter.next();
+		// 		p2Term = p2Iter.next();
+		// 	} else if (p1Term.getExponent() > p2Term.getExponent()) {
+		// 		sum.addTermLast(new Term(p1Term.getExponent(), p1Term.getCoefficient()));
+		// 		p1Term = p1Iter.next();
+		// 	} else if (p1Term.getExponent() < p2Term.getExponent()) {
+		// 		sum.addTermLast(new Term(p2Term.getExponent(), p2Term.getCoefficient()));
+		// 		p2Term = p1Iter.next();
+		// 	}
+		// }
+		// return sum;
+
+		Polynomial sum = p1.deepClone();
+		
+		for (Term term: p2.polynomial) {
+			sum.addTerm(term);
 		}
 	
 		return sum;
+
 	}
 
 	private void multiplyTerm(Term t)
 	{	
 		int termExponent = t.getExponent();
 		BigInteger termCoefficient = t.getCoefficient();
+
+		if (termCoefficient.intValue() == 0) {
+			polynomial = new SLinkedList<Term>();
+		}
 
 		for (Term currentTerm: polynomial)
 		{	
@@ -144,40 +184,57 @@ public class Polynomial
 
 	public BigInteger eval(BigInteger x)
 	{
+		/**** ADD CODE HERE ****/
+		if(polynomial.size() == 0) {
+			return new BigInteger("0");
+		}
+
+
+
 		BigInteger result = polynomial.get(0).getCoefficient().multiply(x);
+		if(polynomial.size() ==1){
+			result = polynomial.get(0).getCoefficient().multiply(x.pow(polynomial.get(0).getExponent()));
+			String resultString = result.toString();
+			return new BigInteger(resultString);
+		}
+
 		int highestDeg = polynomial.get(0).getExponent();
 		int degCount =0;
 
-		Term tempPrevious = polynomial.get(0);
-		
+
+
+		ArrayList<Integer> expArray = new ArrayList<Integer>();
 		for(Term current: polynomial){
-			degCount = tempPrevious.getExponent();
-			
+			expArray.add(current.getExponent());
+		}
+
+		int tempPrevious = expArray.get(0);
+		int i =1;
+		for(Term current: polynomial){
+			degCount = expArray.get(i-1);
 			//skip the first term 0
-			if(current.getExponent() == highestDeg)
-			{
-				tempPrevious = current.deepClone();
+			if(current.getExponent() == highestDeg){
 				continue;
-			}
-			//if consecutive degree, add coefficient of next term and multiply by x;
-			if(current.getExponent() == tempPrevious.getExponent()-1)
-			{
+			}//if consecutive degree, add coefficient of next term and multiply by x;
+			if(current.getExponent() == expArray.get(i-1)-1){
 				result = (result.add(current.getCoefficient())).multiply(x);
-				tempPrevious = current.deepClone();
+				++i;
 				continue;
 				//add 0 and multiply by x while the coefficients are 0 for the degrees
-			}
-			else while(current.getExponent() < degCount-1) 
-			{
+			}else while(current.getExponent() < degCount-1) {
 				result = result.multiply(x);
 				degCount--;
-			}
-			
-			result = (result.add(current.getCoefficient()));
-			tempPrevious = current.deepClone();
+			}result = (result.add(current.getCoefficient()));
+			if(current.getExponent() > 0 && current.getExponent() != expArray.get(expArray.size()-1))
+				result = result.multiply(x);
+			if(current.getExponent() == expArray.get(expArray.size()-1))
+				result = result.multiply(x.pow(current.getExponent()));
+			++i;
 
 		}
 
+
+//		String resultString = result.divide(BigInteger.valueOf(2)).toString();
 		String resultString = result.toString();
 		return new BigInteger(resultString);
 	}
@@ -231,7 +288,7 @@ public class Polynomial
 		return polynomial.toString();
 	}
 
-	public SLinkedList<Term> getLinkedList(){
+	private SLinkedList<Term> getLinkedList(){
 		return polynomial;
 	}
 }

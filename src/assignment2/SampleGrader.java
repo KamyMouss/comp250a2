@@ -7,8 +7,8 @@ public class SampleGrader {
 
     public static void main(String[] args) 
 	{	
-		SampleGrader.testClone_1();
-		SampleGrader.testAddTerm_1();
+		//SampleGrader.testClone_1();
+		//SampleGrader.testAddTerm_1();
 		SampleGrader.testEval();
 	}
 	
