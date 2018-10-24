@@ -7,8 +7,8 @@ public class SampleGrader {
 
     public static void main(String[] args) 
 	{	
-		//SampleGrader.testClone_1();
-		//SampleGrader.testAddTerm_1();
+		SampleGrader.testClone_1();
+		SampleGrader.testAddTerm_1();
 		SampleGrader.testEval();
 	}
 	
@@ -280,7 +280,10 @@ public class SampleGrader {
 					p1.addTermLast(t);
 					expectedResult = expectedResult.add(t.eval(new BigInteger("2")));
 				}
-				
+				// System.out.println("Polynomial: " + p1);
+				// System.out.println("Obtained: " + p1.eval(new BigInteger("2")));
+				// System.out.println("Expected: " + expectedResult);
+
 				if (p1.eval(new BigInteger("2")).compareTo(expectedResult) != 0)
 				{	
 					comment = comment + " Error: incorrect evaluation!!";

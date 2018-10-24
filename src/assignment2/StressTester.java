@@ -11,7 +11,7 @@ public class StressTester {
 	{
 		testClone();
 		testAddTerm();
-		testAdd();
+		//testAdd();
 		testMultiplyTerm();
 		testMultiply();
 		testEval();

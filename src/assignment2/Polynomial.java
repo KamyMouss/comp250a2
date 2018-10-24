@@ -184,59 +184,79 @@ public class Polynomial
 
 	public BigInteger eval(BigInteger x)
 	{
-		/**** ADD CODE HERE ****/
+		BigInteger result = new BigInteger("0");
+		BigInteger currentCoeff;
+		Term lastTerm;
+		int currentExponent;
+		int lastExponent = Integer.MAX_VALUE;
+		
+		// if x = 0, check if theres a term without exponents and return coefficient, else 0
+		if (x.equals(new BigInteger("0"))){
+			lastTerm = polynomial.removeLast();
+			if (lastTerm.getExponent() == 0) {
+				result = result.add(lastTerm.getCoefficient());
+			}
+			else return result;
+		}
+		
+		// if poly is size 0 -> return 0
 		if(polynomial.size() == 0) {
-			return new BigInteger("0");
+		 	return result;
 		}
 
-
-
-		BigInteger result = polynomial.get(0).getCoefficient().multiply(x);
-		if(polynomial.size() ==1){
-			result = polynomial.get(0).getCoefficient().multiply(x.pow(polynomial.get(0).getExponent()));
-			String resultString = result.toString();
-			return new BigInteger(resultString);
-		}
-
-		int highestDeg = polynomial.get(0).getExponent();
-		int degCount =0;
-
-
-
-		ArrayList<Integer> expArray = new ArrayList<Integer>();
-		for(Term current: polynomial){
-			expArray.add(current.getExponent());
-		}
-
-		int tempPrevious = expArray.get(0);
-		int i =1;
-		for(Term current: polynomial){
-			degCount = expArray.get(i-1);
-			//skip the first term 0
-			if(current.getExponent() == highestDeg){
-				continue;
-			}//if consecutive degree, add coefficient of next term and multiply by x;
-			if(current.getExponent() == expArray.get(i-1)-1){
-				result = (result.add(current.getCoefficient())).multiply(x);
-				++i;
-				continue;
-				//add 0 and multiply by x while the coefficients are 0 for the degrees
-			}else while(current.getExponent() < degCount-1) {
+		// if poly is size 1 -> simple calculation
+		if(polynomial.size() == 1) {
+			result = result.add(polynomial.get(0).getCoefficient());
+			for (int i = 0; i < polynomial.get(0).getExponent(); i++)
 				result = result.multiply(x);
-				degCount--;
-			}result = (result.add(current.getCoefficient()));
-			if(current.getExponent() > 0 && current.getExponent() != expArray.get(expArray.size()-1))
-				result = result.multiply(x);
-			if(current.getExponent() == expArray.get(expArray.size()-1))
-				result = result.multiply(x.pow(current.getExponent()));
-			++i;
-
+			return result;
 		}
 
+		// if poly is complex -> do this shit
+		boolean firstRun = true;
+		for (Term currentTerm: polynomial){
+			currentExponent = currentTerm.getExponent();
+			currentCoeff = currentTerm.getCoefficient();
+			
+			if (!firstRun){ 
+				// if the next term doesnt have any coefficients -> multiply by x and continue
+				while (currentExponent != lastExponent-1) {
+					result = result.multiply(x);
+					lastExponent--;
+				}
 
-//		String resultString = result.divide(BigInteger.valueOf(2)).toString();
-		String resultString = result.toString();
-		return new BigInteger(resultString);
+				// if last element after eliminating inbetween elements is 0exp -> add coeff and finish
+				if (currentExponent == 0){
+				 	result = result.add(currentCoeff);
+					break;
+				}
+				
+				result = result.add(currentCoeff).multiply(x);
+				lastExponent = currentExponent;
+			}
+
+			// If the exponent is 0 -> add last coefficient to result and stop looping
+			if (currentExponent == 0){
+				result = result.add(currentCoeff);
+				break;
+			}
+			
+			// if its the first run -> set initial
+			if (firstRun){
+				lastExponent = currentExponent;
+				result = result.add(currentCoeff).multiply(x);
+				firstRun = false;
+				continue;
+			}
+		}
+
+		// if the last exponent in the loop was larger than 1 -> multiply by 
+		while (lastExponent > 1) {
+			result = result.multiply(x);
+			lastExponent--;
+		}
+
+		return result;
 	}
 	
 	// Checks if this polynomial is same as the polynomial in the argument.

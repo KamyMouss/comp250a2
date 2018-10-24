@@ -316,18 +316,20 @@ public class PolynomialTester {
 		System.out.println("TEST: testEval_1");
 		Polynomial p1 = new Polynomial();
 		
-		p1.addTermLast(new Term(4, new BigInteger("2")));
-		p1.addTermLast(new Term(3, new BigInteger("1")));
-		p1.addTermLast(new Term(2, new BigInteger("2")));
-		p1.addTermLast(new Term(0, new BigInteger("1")));
+		p1.addTermLast(new Term(4, new BigInteger("3")));
+		p1.addTermLast(new Term(2, new BigInteger("3")));
+		// p1.addTermLast(new Term(4, new BigInteger("2")));
+		// p1.addTermLast(new Term(3, new BigInteger("1")));
+		// p1.addTermLast(new Term(2, new BigInteger("2")));
+		// p1.addTermLast(new Term(0, new BigInteger("1")));
 				
 	
 		System.out.println("Polynomial = " + p1);
 		System.out.println("x = 2");
 		System.out.println("Obtained: " + p1.eval(new BigInteger("2")));
-		System.out.println("Expected: 49");
+		System.out.println("Expected: 60");
 		
-		if (p1.eval(new BigInteger("2")).compareTo(new BigInteger("49")) == 0)
+		if (p1.eval(new BigInteger("2")).compareTo(new BigInteger("60")) == 0)
 		{
 			System.out.println("Passed: eval() - Test 1");
 			System.out.println("***TEST ENDED***\n");
